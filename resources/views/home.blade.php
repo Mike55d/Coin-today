@@ -81,9 +81,6 @@
 			method: "GET",
 			data,
 		}).done((res) => {
-			$('.spinner').addClass('hide');
-			$('.text-btn').text('Convert');
-			$('.btn-convert').prop('disabled', false);
 			const result = res.result;
 			const oneFrom = result / data.amount; // one Usd to VEF
 			const oneTo = 1 / oneFrom; // one VEF to usd
@@ -91,14 +88,20 @@
 			$('.result').text(`${result.toFixed(4)} ${countryTo}s`);
 			$('.oneFrom').text(`1 ${data.from} = ${oneFrom.toFixed(4)} ${data.to}`);
 			$('.oneTo').text(`1 ${data.to} = ${oneTo.toFixed(4)} ${data.from}`);
-		})
+		}).fail(function() {
+			window.location.replace("{{route('limitRequests')}}");
+		}).always(function() {
+			$('.spinner').addClass('hide');
+			$('.text-btn').text('Convert');
+			$('.btn-convert').prop('disabled', false);
+		});
 
 	}
 
 	$(".dropdown-select-2").select2({
 		templateResult: formatState,
 		templateSelection: formatState,
-		placeholder: "Select a state",
+		placeholder: "Select a currency",
 		allowClear: true
 	}).val(null).trigger('change');
 </script>

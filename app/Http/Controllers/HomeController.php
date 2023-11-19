@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ApiTrack;
 use Illuminate\Support\Facades\Http;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
@@ -33,6 +34,17 @@ class HomeController extends Controller
 
     public function getCurrency(Request $request)
     {
+        $userIp = $this->getIp();
+        $userRequests = ApiTrack::all()->where('ip_user', $userIp)->values();
+        if (count($userRequests) > 4) {
+            return response('Limit requests.', 500);
+        }
+        ApiTrack::create([
+            'ip_user' => $userIp,
+            'from' => $request->query('from'),
+            'to' => $request->query('to'),
+            'amount' => $request->query('amount'),
+        ]);
         $convert = Http::withoutVerifying()->get('http://api.currencylayer.com/convert', [
             'access_key' => env("CURRENCY_LAYER_KEY"),
             'from' => $request->query('from'),

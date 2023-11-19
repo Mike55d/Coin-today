@@ -14,5 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class,'home']);
-Route::get('/getCurrency', [HomeController::class,'getCurrency'])->name('getCurrency');
+Route::get('/', [HomeController::class, 'home']);
+Route::get('/getCurrency', [HomeController::class, 'getCurrency'])->name('getCurrency');
+Route::get('/limitRequests', function () {
+    return view('limitRequests');
+})->name('limitRequests');

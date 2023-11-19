@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class ApiTrack extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'ip_user',
+        'from',
+        'to',
+        'amount',
+    ];
 }
