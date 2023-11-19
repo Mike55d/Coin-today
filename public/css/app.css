@@ -1,0 +1,15 @@
+.select2-container .select2-selection--single {
+    height: 38px !important;
+}
+
+.img-flag{
+    width: 30px;
+}
+
+.hide{
+    display: none;
+}
+
+body{
+    background-color: #164863;
+}
